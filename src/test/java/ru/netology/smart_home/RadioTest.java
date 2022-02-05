@@ -8,11 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RadioTest {
 
+    Radio radio = new Radio();
+
     @Test
     public void shouldCreateDefaultRadio() {
-        Radio radio = new Radio(); // Создаем радио с 10 радиостанциями
         int expected = 9;
-        int actual = radio.getLastStation(); // Получаем номер последней станции
+        int actual = radio.calculateLastStation(); // Получаем номер последней станции
         assertEquals(expected, actual);
     }
 
@@ -20,7 +21,7 @@ public class RadioTest {
     public void shouldCreateCustomRadio() {
         Radio radio = new Radio(20); // Создаем радио с 20 радиостанциями
         int expected = 19;
-        int actual = radio.getLastStation(); // Получаем номер последней станции
+        int actual = radio.calculateLastStation(); // Получаем номер последней станции
         assertEquals(expected, actual);
     }
 
@@ -29,8 +30,8 @@ public class RadioTest {
             "Middle station, 20, 5, 6",
             "Last station, 20, 19, 0"
     })
-    public void shouldSetNextStation(String name, int numberOfStations, int CurrentStation, int expected) {
-        Radio radio = new Radio(numberOfStations, CurrentStation, 0);
+    public void shouldSetNextStation(String name, int numberOfStations, int currentStation, int expected) {
+        Radio radio = new Radio(0, currentStation, numberOfStations);
         radio.nextStation(); // Переключаем на следующую станцию
         int actual = radio.getCurrentStation();
         assertEquals(expected, actual);
@@ -41,8 +42,8 @@ public class RadioTest {
             "Middle station, 20, 5, 4",
             "First station, 20, 0, 19"
     })
-    public void shouldSetPrevStation(String name, int numberOfStations, int CurrentStation, int expected) {
-        Radio radio = new Radio(numberOfStations, CurrentStation, 0);
+    public void shouldSetPrevStation(String name, int numberOfStations, int currentStation, int expected) {
+        Radio radio = new Radio(0, currentStation, numberOfStations);
         radio.prevStation(); // Переключаем на предыдущую станцию
         int actual = radio.getCurrentStation();
         assertEquals(expected, actual);
@@ -56,9 +57,8 @@ public class RadioTest {
             "Below Limit, -1, 0",
             "Over Limit, 10, 0",
     })
-    public void shouldSetStation(String name, int CurrentStation, int expected) {
-        Radio radio = new Radio(); // Создаем радио с 10 радиостанциями
-        radio.setCurrentStation(CurrentStation); // Переключаем на желаемую станцию
+    public void shouldSetStation(String name, int currentStation, int expected) {
+        radio.setCurrentStation(currentStation); // Переключаем на желаемую станцию
         int actual = radio.getCurrentStation();
         assertEquals(expected, actual);
     }
@@ -69,7 +69,7 @@ public class RadioTest {
             "Maximum volume, 100, 100"
     })
     public void shouldIncreaseVolume(String name, int volume, int expected) {
-        Radio radio = new Radio(0, 0, volume);
+        radio.setCurrentVolume(volume);
         radio.increaseVolume(); // Прибавляем громкость
         int actual = radio.getCurrentVolume();
         assertEquals(expected, actual);
@@ -81,7 +81,7 @@ public class RadioTest {
             "Minimum volume, 0, 0"
     })
     public void shouldDecreaseVolume(String name, int volume, int expected) {
-        Radio radio = new Radio(0, 0, volume);
+        radio.setCurrentVolume(volume);
         radio.decreaseVolume(); // Убавляем громкость
         int actual = radio.getCurrentVolume();
         assertEquals(expected, actual);

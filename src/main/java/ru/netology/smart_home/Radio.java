@@ -1,31 +1,24 @@
 package ru.netology.smart_home;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Radio {
     private int currentVolume;
-    int minVolume = 0;
-    int maxVolume = 100;
+    final int minVolume = 0;
+    final int maxVolume = 100;
 
     private int currentStation;
     private int numberOfStations = 10;
-    int firstStation = 0;
-    private int lastStation = calculateLastStation();
-
-    // Конструктор с полями по-умолчанию (дефолтный)
-    public Radio() {
-    }
+    final int firstStation = 0;
 
     // Конструктор с указанием количества радиостанций
     public Radio(int numberOfStations) {
         this.numberOfStations = numberOfStations;
-        this.lastStation = calculateLastStation();
-    }
-
-    // Конструктор с указанием текущих значений (для тестов)
-    public Radio(int numberOfStations, int currentStation, int currentVolume) {
-        this.numberOfStations = numberOfStations;
-        this.currentVolume = currentVolume;
-        this.currentStation = currentStation;
-        this.lastStation = calculateLastStation();
     }
 
     // Переключение радиостанций
@@ -34,11 +27,8 @@ public class Radio {
         return firstStation + numberOfStations - 1;
     }
 
-    public int getLastStation() {
-        return lastStation;
-    }
-
     public void nextStation() {
+        int lastStation = calculateLastStation();
         if (currentStation < lastStation) {
             currentStation++;
         } else {
@@ -47,6 +37,7 @@ public class Radio {
     }
 
     public void prevStation() {
+        int lastStation = calculateLastStation();
         if (currentStation > firstStation) {
             currentStation--;
         } else {
@@ -54,11 +45,8 @@ public class Radio {
         }
     }
 
-    public int getCurrentStation() {
-        return currentStation;
-    }
-
     public void setCurrentStation(int currentStation) {
+        int lastStation = calculateLastStation();
         if (currentStation < firstStation) {
             return;
         }
@@ -69,10 +57,6 @@ public class Radio {
     }
 
     // Переключение громкости звука
-
-    public int getCurrentVolume() {
-        return currentVolume;
-    }
 
     public void increaseVolume() {
         if (currentVolume < maxVolume) {
