@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class Radio {
     private int currentVolume;
-    final int minVolume = 0;
-    final int maxVolume = 100;
+    private final int minVolume = 0;
+    private final int maxVolume = 100;
 
     private int currentStation;
     private int numberOfStations = 10;
-    final int firstStation = 0;
+    private final int firstStation = 0;
 
     // Конструктор с указанием количества радиостанций
     public Radio(int numberOfStations) {
