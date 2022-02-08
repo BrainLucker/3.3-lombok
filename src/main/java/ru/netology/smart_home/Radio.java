@@ -2,12 +2,12 @@ package ru.netology.smart_home;
 
 public class Radio {
     private int currentVolume;
-    int minVolume = 0;
-    int maxVolume = 100;
+    private final int minVolume = 0;
+    private final int maxVolume = 100;
 
     private int currentStation;
     private int numberOfStations = 10;
-    int firstStation = 0;
+    private final int firstStation = 0;
     private int lastStation = calculateLastStation();
 
     // Конструктор с полями по-умолчанию (дефолтный)
